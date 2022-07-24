@@ -1,6 +1,8 @@
+import { unstable_getServerSession } from "next-auth";
 import { User } from "@prisma/client";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { prisma, PrismaClient } from "../utils/prisma";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
 
 export type Context = {
 	prisma: PrismaClient;
@@ -10,18 +12,12 @@ export type Context = {
 export const createContext = async (
 	opts: trpcNext.CreateNextContextOptions
 ): Promise<Context> => {
-	const { req } = opts;
-	const sessionToken =
-		req.cookies?.["next-auth.session-token"] ||
-		(req.headers?.["next-auth.session-token"] as string);
-
-	const session = await prisma.session.findUniqueOrThrow({
-		where: { sessionToken: sessionToken },
-	});
+	const { req, res } = opts;
+	const session = await unstable_getServerSession(req, res, authOptions);
 
 	const user = await prisma.user.findUniqueOrThrow({
 		where: {
-			id: session.userId,
+			email: session?.user?.email as string,
 		},
 	});
 
