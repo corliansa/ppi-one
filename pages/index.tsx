@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import LoginButton from "../component/LoginButton";
 import styles from "../styles/Home.module.css";
@@ -29,59 +30,9 @@ const Home: NextPage = (props) => {
 				<br />
 
 				{!!session && (
-					<div style={{ display: "flex", flexDirection: "column" }}>
-						<label>
-							URL:{" "}
-							<input
-								type="text"
-								value={linkUrl}
-								placeholder="https://corliansa.xyz"
-								onChange={(e) => setLinkUrl(e.target.value)}
-							/>
-							<br />
-						</label>
-						<label>
-							Slug:{" "}
-							<input
-								type="text"
-								value={linkSlug}
-								placeholder="corliansa"
-								onChange={(e) => setLinkSlug(e.target.value)}
-							/>
-							<br />
-						</label>
-						<label>
-							Desc:{" "}
-							<input
-								type="text"
-								value={linkDescription}
-								placeholder="My personal website"
-								onChange={(e) => setLinkDescription(e.target.value)}
-							/>
-							<br />
-						</label>
-						<button
-							style={{ marginTop: 6 }}
-							onClick={async () => {
-								const res = await fetch("/api/createLink", {
-									method: "POST",
-									body: JSON.stringify({
-										email: session.user!.email,
-										url: linkUrl,
-										slug: linkSlug,
-										description: linkDescription,
-									}),
-								});
-								const data = await res.json();
-								alert(JSON.stringify(data, null, 2));
-								setLinkUrl("");
-								setLinkSlug("");
-								setLinkDescription("");
-							}}
-						>
-							Add
-						</button>
-					</div>
+					<Link href="/links">
+						<button>Manage links</button>
+					</Link>
 				)}
 			</main>
 		</div>
