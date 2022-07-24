@@ -8,7 +8,7 @@ import { trpc } from "../utils/trpc";
 
 const Links: NextPage = (props) => {
 	const utils = trpc.useContext();
-	const { data: session } = useSession();
+	const { data: session, status } = useSession();
 
 	const { data, isLoading } = trpc.useQuery(["getLinks"]);
 	const { mutateAsync: createLink, isLoading: loading } = trpc.useMutation(
@@ -57,7 +57,9 @@ const Links: NextPage = (props) => {
 					</ul>
 				</div>
 
-				{!!session && (
+				{status !== "loading" && !session && <span>Unauthorized</span>}
+
+				{status === "authenticated" && !!session && (
 					<div style={{ display: "flex", flexDirection: "column" }}>
 						<label>
 							URL:{" "}
