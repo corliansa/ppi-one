@@ -6,7 +6,7 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import { trpc } from "../utils/trpc";
 
-const Links: NextPage = (props) => {
+const Links: NextPage = () => {
 	const utils = trpc.useContext();
 	const { data: session, status } = useSession();
 
@@ -117,5 +117,7 @@ const Links: NextPage = (props) => {
 		</div>
 	);
 };
+
+export { getSessionServerSideProps as getServerSideProps } from "../utils/serverSideProps";
 
 export default Links;

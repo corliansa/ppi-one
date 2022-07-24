@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import React from "react";
 import LoginButton from "../component/LoginButton";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = (props) => {
+const Home: NextPage = () => {
 	const { data: session } = useSession();
 
 	const [linkDescription, setLinkDescription] = React.useState("");
@@ -38,5 +38,7 @@ const Home: NextPage = (props) => {
 		</div>
 	);
 };
+
+export { getSessionServerSideProps as getServerSideProps } from "../utils/serverSideProps";
 
 export default Home;
