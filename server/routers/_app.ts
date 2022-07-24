@@ -7,7 +7,7 @@ export const appRouter = createRouter()
 	.transformer(superjson)
 	.query("hello", { resolve: () => "Hello, World!" })
 	.middleware(async ({ ctx, next }) => {
-		if (!ctx.user.role.includes("admin")) {
+		if (!ctx.user.role?.includes("admin")) {
 			throw new trpc.TRPCError({
 				code: "UNAUTHORIZED",
 				message: "You are not authorized to access this resource.",
