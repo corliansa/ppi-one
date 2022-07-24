@@ -28,7 +28,7 @@ const Slug: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const link = await prisma.links.findUnique({
-		where: { slug: context.query.slug as string },
+		where: { slug: (context.query.slug as string)?.toLowerCase() },
 	});
 
 	if (link?.url)

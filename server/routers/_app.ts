@@ -29,7 +29,7 @@ export const appRouter = createRouter()
 					createdBy: user.email as string,
 					description: description,
 					url: url,
-					slug: slug,
+					slug: slug.toLowerCase(),
 				},
 			});
 
