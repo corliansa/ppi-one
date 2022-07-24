@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import React from "react";
 import LoginButton from "../component/LoginButton";
 import styles from "../styles/Home.module.css";

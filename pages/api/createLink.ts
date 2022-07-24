@@ -8,7 +8,7 @@ export default async function handler(
 ) {
 	const { email, description, url, slug } = JSON.parse(req.body);
 
-	const user = await prisma.users.findUniqueOrThrow({
+	const user = await prisma.user.findUniqueOrThrow({
 		where: { email: email },
 	});
 
